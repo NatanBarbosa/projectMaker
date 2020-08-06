@@ -1,0 +1,63 @@
+ORGANIZADOR DE PROJETOS
+
+Banco de dados
+
+create table usuarios (
+    id_user INT not null primary key AUTO_INCREMENT,
+    email varchar(50) not null,
+    senha varchar(50) not null
+);
+
+create table informacoes_gerais (
+    id_projeto INT not null PRIMARY KEY AUTO_INCREMENT,
+    nome varchar(50) not null,
+    custo_total float(8,2) default 0.00,
+    colaboradores int not null default 0,
+    data_inicio date DEFAULT CURRENT_DATE() not null,
+    data_fim date, 
+    tempo_previsto int,
+    detalhes text,
+    fk_id_usuario int not null,
+    FOREIGN KEY(fk_id_usuario) REFERENCES usuarios(id_user)
+);
+
+create table materiais(
+	id_material INT PRIMARY key AUTO_INCREMENT,
+    nome_material varchar(75),
+    preco float(8,2),
+    fk_id_projeto int,
+    fk_id_usuario int,
+    FOREIGN KEY(fk_id_projeto) REFERENCES informacoes_gerais(id_projeto),
+    FOREIGN KEY(fk_id_usuario) REFERENCES usuarios(id_user)
+);
+
+create table funcionarios(
+	id_funcionario INT PRIMARY key AUTO_INCREMENT,
+    funcao varchar(75),
+    salario float(8,2),
+    fk_id_projeto int,
+    fk_id_usuario int,
+    FOREIGN KEY(fk_id_projeto) REFERENCES informacoes_gerais(id_projeto),
+    FOREIGN KEY(fk_id_usuario) REFERENCES usuarios(id_user)
+);
+
+(front: btn de adicionar funcionário para criar mais forms dinamicamente)
+
+
+FRONT END
+páginas
+- criador do projeto (formulário e mais informações)
+- consulta de projetos (cada projeto em uma tabela com as colunas do bd), (algumas colunas serão criadas dinamicamente)
+- sobre a aplicação (informações sobre a aplicação e como usar)
+
+PALETAS
+#bdb5b3
+#e1d09f
+#62523f
+#452c15
+#905e32
+
+http://www.colorfavs.com/palettes/111645/
+
+
+
