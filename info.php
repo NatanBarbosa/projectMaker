@@ -1,3 +1,7 @@
+<?php
+    require_once 'logica/session_validate.php';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -37,28 +41,32 @@
         <div class="container">
 
             <nav class="navbar navbar-expand-lg nav-side-menu">
-                
+
                 <div class="brand">
-                    <a href="criar.html"><img src="imagens/brand.png" alt="brand" width="220"></a>
+                    <a href="criar.php"><img src="imagens/brand.png" alt="brand" width="220"></a>
                 </div>
 
                 <button id="bars" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-bars"></i>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="pl-2 nav-item">
-                            <a href="criar.html" class="nav-link primeiro px-4 py-3"> <i class="fas fa-edit"></i> &nbsp; Criar Projeto </a>
-                        </li> 
+                            <a href="criar.php" class="nav-link primeiro"> <i class="fas fa-edit"></i> &nbsp; Criar Projeto </a>
+                        </li>
 
-                        <li class="pl-2 nav-item">
-                            <a href="consultar.html" class="nav-link px-4 py-3"> <i class="fas fa-search"></i> &nbsp; Consultar Projeto </a>
-                        </li> 
+                        <li class="nav-item">
+                            <a href="consultar.php" class="nav-link"> <i class="fas fa-search"></i> &nbsp; Consultar Projeto </a>
+                        </li>
 
-                        <li class="pl-2 nav-item">
-                            <a href="info.html" class="nav-link ativo px-4 py-3"> &nbsp; <i class="fas fa-info"></i> &nbsp; Sobre o site </a>
+                        <li class="nav-item">
+                            <a href="info.php" class="nav-link ativo"> &nbsp; <i class="fas fa-info"></i> &nbsp; Sobre o site </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="logica/session_destroy.php" class="nav-link logoff"> &nbsp; <i class="fas fa-sign-out-alt"></i> &nbsp; Deslogar </a>
                         </li>
                     </ul>
                 </div>
@@ -74,7 +82,7 @@
             <p class="lead">Crie e organize todas as informações de seu projeto de modo muito prático e objetivo. Volte no site sempre que precisar consultar informações do projeto ou atualiza-las</p>
             <hr class="my-4">
             <p>Para começar, na página principal, preencha os campos de formulário referentes às informações de seu projeto. Alguns campos poder ser deixados em branco. Em outros campos podem ser adicionado mais grupos de formulários clicando no botão <button type="button" class="btn btn-success btn-sm"> <i class="fas fa-plus" style="font-size: 14px"></i> </button></p>
-            <a class="btn btn-primary btn-lg" href="criar.html" role="button">Vamos começar!!!</a>
+            <a class="btn btn-primary btn-lg" href="criar.php" role="button">Vamos começar!!!</a>
         </div>
 
     </section>

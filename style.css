@@ -19,8 +19,9 @@ header{
     text-decoration: none;
     color: #e1ffff;
     cursor: pointer;
-    font-size: 16px;
-    border-left: 1px solid black
+    font-size: 15px;
+    border-left: 1px solid black;
+    padding: 15px 20px;
 }
 
 .primeiro{
@@ -37,6 +38,18 @@ header{
 .nav-link:hover {
     border-left: 3px solid #e1ffff;
     background-color: #4f5b69;
+    color: #ffffff;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.logoff{
+    color: red;
+}
+
+.nav-item .logoff:hover{
+    border-left: 3px solid red;
+    background-color: #694f4f;
     color: #ffffff;
     border-radius: 5px;
     text-decoration: none;

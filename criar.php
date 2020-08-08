@@ -1,3 +1,6 @@
+<?php
+    require_once 'logica/session_validate.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -36,7 +39,7 @@
             <nav class="navbar navbar-expand-lg nav-side-menu">
                 
                 <div class="brand">
-                    <a href="criar.html"><img src="imagens/brand.png" alt="brand" width="220"></a>
+                    <a href="criar.php"><img src="imagens/brand.png" alt="brand" width="220"></a>
                 </div>
 
                 <button id="bars" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -47,15 +50,19 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="pl-2 nav-item">
-                            <a href="criar.html" class="nav-link ativo primeiro px-4 py-3"> <i class="fas fa-edit"></i> &nbsp; Criar Projeto </a>
+                            <a href="criar.php" class="nav-link ativo primeiro"> <i class="fas fa-edit"></i> &nbsp; Criar Projeto </a>
                         </li> 
 
-                        <li class="pl-2 nav-item">
-                            <a href="consultar.html" class="nav-link px-4 py-3"> <i class="fas fa-search"></i> &nbsp; Consultar Projeto </a>
+                        <li class="nav-item">
+                            <a href="consultar.php" class="nav-link"> <i class="fas fa-search"></i> &nbsp; Consultar Projeto </a>
                         </li> 
 
-                        <li class="pl-2 nav-item">
-                            <a href="info.html" class="nav-link px-4 py-3"> &nbsp; <i class="fas fa-info"></i> &nbsp; Sobre o site </a>
+                        <li class="nav-item">
+                            <a href="info.php" class="nav-link"> &nbsp; <i class="fas fa-info"></i> &nbsp; Sobre o site </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="logica/session_destroy.php" class="nav-link logoff"> &nbsp; <i class="fas fa-sign-out-alt"></i> &nbsp; Deslogar </a>
                         </li>
                     </ul>
                 </div>
@@ -69,28 +76,32 @@
         <h1>Informe os dados do projeto</h1>
         <hr>
 
-        <form action="">
+        <form method="POST" action="logica/armazenarDados.php" id="criarProjeto">
             <fieldset>
                 <legend>Informações gerais</legend>
 
                 <div class="form-group">
                     <label for="nome">Nome/identificação do projeto</label> <br>
                     <input type="text" id="nome" name="nome" class="form-control" placeholder="Ex.: Desenvolvimento de sistema WEB">
+                    <div class="invalid-feedback"> preencha o campo de nome </div>
                 </div> <br>
 
                 <div class="form-group">
                     <label for="dataInicio">Data de início</label> <br>
                     <input type="date" id="dataInicio" name="dataInicio" class="form-control">
+                    <div class="invalid-feedback"> preencha o campo de data </div>
                 </div> <br>
 
                 <div class="form-group">
                     <label for="dataFim">Prazo final</label> <br>
                     <input type="date" id="dataFim" name="dataFim" class="form-control">
+                    <div class="invalid-feedback"> A data final não deve ser menor que a inicial </div>
                 </div> <br>
 
                 <div class="form-group">
                     <label for="descricao">Descrição/detalhes</label> <br>
-                    <textarea id="descricao" name="descricao" class="form-control" placeholder="insira uma decrição detalhada do projeto aqui"></textarea>
+                    <textarea id="descricao" name="descricao" class="form-control" placeholder="insira uma descrição detalhada do projeto aqui"></textarea>
+                    <div class="invalid-feedback"> Descreva seu projeto </div>
                 </div> <br>
             </fieldset>
 
@@ -114,7 +125,7 @@
                 <button type="button" id="addFuncionario" class="btn btn-success mt-2"> <i class="fas fa-plus"></i> </button>
             </fieldset>
             
-            <button type="submit" class="btn btn-outline-info btn-block p-2"> Guardar projeto </button>
+            <button type="button" class="btn btn-outline-info btn-block p-2" id="btn-validar" onclick="validaFormulario()"> Guardar projeto </button>
         </form>
 
     </section>

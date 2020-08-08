@@ -52,7 +52,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fas fa-user"></i> </span>
                         </div>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="ex.: usuario@gmail.com">
+                        <input type="email" class="form-control" id="email" name="email" required placeholder="ex.: usuario@gmail.com">
                     </div>
 
                     <br>
@@ -62,9 +62,16 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fas fa-key"></i> </span>
                         </div>
-                        <input type="password" class="form-control" id="senha" name="senha" placeholder="">
+                        <input type="password" class="form-control" id="senha" name="senha" required placeholder="">
                     </div>
 
+                    <? if( isset($_GET['login']) && $_GET['login'] == 'invalido' ) {?>
+                        <small class="text-danger"> E-mail ou senha invalidos </small>
+                    <? } ?>
+
+                    <? if( isset($_GET['login']) && $_GET['login'] == 'indefinido' ) {?>
+                        <small class="text-danger"> Faça login antes de tentar acessar as páginas </small>
+                    <? } ?>
                     <hr>
 
                     <button type="submit" class="btn btn-primary btn-block"> Login </button>

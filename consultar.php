@@ -1,3 +1,6 @@
+<?php
+    require_once 'logica/session_validate.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -36,7 +39,7 @@
         <nav class="navbar navbar-expand-lg nav-side-menu">
 
             <div class="brand">
-                <a href="criar.html"><img src="imagens/brand.png" alt="brand" width="220"></a>
+                <a href="criar.php"><img src="imagens/brand.png" alt="brand" width="220"></a>
             </div>
 
             <button id="bars" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -47,15 +50,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="pl-2 nav-item">
-                        <a href="criar.html" class="nav-link primeiro px-4 py-3"> <i class="fas fa-edit"></i> &nbsp; Criar Projeto </a>
+                        <a href="criar.php" class="nav-link primeiro"> <i class="fas fa-edit"></i> &nbsp; Criar Projeto </a>
                     </li>
 
-                    <li class="pl-2 nav-item">
-                        <a href="consultar.html" class="nav-link px-4 py-3 ativo"> <i class="fas fa-search"></i> &nbsp; Consultar Projeto </a>
+                    <li class="nav-item">
+                        <a href="consultar.php" class="nav-link ativo"> <i class="fas fa-search"></i> &nbsp; Consultar Projeto </a>
                     </li>
 
-                    <li class="pl-2 nav-item">
-                        <a href="info.html" class="nav-link px-4 py-3"> &nbsp; <i class="fas fa-info"></i> &nbsp; Sobre o site </a>
+                    <li class="nav-item">
+                        <a href="info.php" class="nav-link"> &nbsp; <i class="fas fa-info"></i> &nbsp; Sobre o site </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="logica/session_destroy.php" class="nav-link logoff"> &nbsp; <i class="fas fa-sign-out-alt"></i> &nbsp; Deslogar </a>
                     </li>
                 </ul>
             </div>

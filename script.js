@@ -6,7 +6,7 @@ $(document).ready( () => {
     //Input da data
     let data = new Date
     let dia = Number(data.getDate())
-    let mes = Number(data.getMonth())
+    let mes = Number(data.getMonth()) + 1
     let ano = Number(data.getFullYear())
 
     if(dia < 10){
@@ -114,4 +114,73 @@ function escondeProjeto(indice){
 
     //exibindo botão de exibir projeto
     $(`#exibir-projeto-${indice}`).removeClass('d-none').addClass('d-inline')
+}
+
+function validaFormulario(){
+    let nome = $('#nome').val()
+    let descricao = $('#descricao').val()
+    let dataInicio = $('#dataInicio').val()
+    let dataFim = $('#dataFim').val()
+    let valido = true
+    let mensagem = ''
+
+    //campos not nullable
+
+    //verificando nome
+    if( nome.length == 0 ){
+        $('#nome').addClass('is-invalid')
+        valido = false
+    } else{
+        $('#nome').removeClass('is-invalid')
+    }
+
+    //verificando descrição
+    if( descricao.length == 0 ){
+        $('#descricao').addClass('is-invalid')
+        valido = false
+    } else{
+        $('#descricao').removeClass('is-invalid')
+    }
+
+    //verificando data
+    if( dataInicio.length < 10 ){
+        $('#dataInicio').addClass('is-invalid')
+        valido = false
+    } else{
+        $('#dataInicio').removeClass('is-invalid')
+    }
+
+    //data final > data inicial
+    if(dataFim.length == 10){
+        //separando string em arrays -> [0] = ano | [1] = mes | [2] = dia
+        let arrDataInicio = dataInicio.split('-')
+        let arrDataFim = dataFim.split('-')
+
+        //consertando o mês dos arrays para o objeto de data
+        arrDataInicio[1] = Number(arrDataInicio[1]) - 1
+        arrDataFim[1] = Number(arrDataFim[1]) - 1
+
+        console.log(arrDataInicio, arrDataFim)
+
+        //criando objetos de data
+        let objDataInicio = new Date(arrDataInicio[0], arrDataInicio[1], arrDataInicio[2])
+        let objDataFim = new Date(arrDataFim[0], arrDataFim[1], arrDataFim[2])
+
+        //calculando a diferença
+        let milissegundos_entre_datas = objDataFim.getTime() - objDataInicio.getTime()
+        if(milissegundos_entre_datas < 0){
+            mensagem = 'A data final deve ser maior que a inicial'
+            valido = false
+            $('#dataFim').addClass('is-invalid')
+        } else{
+            $('#dataFim').removeClass('is-invalid')
+        }
+    }
+
+    if(valido){
+        $('#criarProjeto').submit()
+    } else{
+        $('#btn-validar').before('<span class="text-danger">conserte os erros para prosseguir</span>')
+    }
+
 }
