@@ -14,12 +14,36 @@ class Projeto {
     private $detalhes;
 
     #materiais
-    private $nome_material;
-    private $preco;
+    private $nome_material = [];
+    private $preco = [];
 
     #funcionarios
-    private $funcao;
-    private $salario;
+    private $funcao = [];
+    private $salario = [];
+
+    public function setMateriais($material, $preco){
+
+        foreach ($material as $i => $m){
+            $this->nome_material[$i] = $m;
+        }
+
+        foreach ($preco as $i => $p){
+            $this->preco[$i] = $p;
+        }
+
+    }
+
+    public function setFuncionarios($funcao, $salario){
+
+        foreach ($funcao as $i => $f){
+            $this->funcao[$i] = $f;
+        }
+
+        foreach ($salario as $i => $s){
+            $this->salario[$i] = $s;
+        }
+
+    }
 
     public function __get($attr){
         return $this->$attr;

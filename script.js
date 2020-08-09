@@ -18,7 +18,6 @@ $(document).ready( () => {
 
     $('#dataInicio').val(`${ano}-${mes}-${dia}`)
 
-
     //implementar função de adicionar material
     let i = 1
     $('#addMaterial').on('click', () => {
@@ -29,7 +28,8 @@ $(document).ready( () => {
 
                 <div class="form-group">
                     <label for="material${i}">Material/produto</label> <br>
-                    <input type="text" id="material${i}" name="material${i}" class="form-control" placeholder="Ex.: IDE Jetbrains">
+                    <input type="text" id="material${i}" name="material[]" class="form-control input-obrigatorio" placeholder="Ex.: IDE Jetbrains">
+                    <div class="invalid-feedback"> Preencha este campo </div>
                 </div> <br>
 
                 <div class="form-group">
@@ -38,7 +38,8 @@ $(document).ready( () => {
                         <div class="input-group-prepend">
                             <span class="input-group-text">R$</span>
                         </div>
-                        <input type="number" id="materialPreco${i}" name="materialPreco${i}" class="form-control">
+                        <input type="text" id="materialPreco${i}" name="materialPreco[]" class="form-control input-obrigatorio money">
+                        <div class="invalid-feedback"> Informe o preço </div>  
                     </div>
                 </div> <br>
 
@@ -50,6 +51,10 @@ $(document).ready( () => {
         $('#materiais').on('click', `#removerMaterial${i}`, e => {
             $(e.target).closest('div').remove()
         })
+
+        //implementar máscara no preço
+        $('.money').mask('#.##0,00', {reverse: true});
+
         
         //evitar repetição de id
         i++ 
@@ -65,7 +70,8 @@ $(document).ready( () => {
 
                 <div class="form-group">
                     <label for="funcao${x}">Função</label> <br>
-                    <input type="text" id="funcao${x}" name="funcao${x}" class="form-control" placeholder="Ex.: Programador">
+                    <input type="text" id="funcao${x}" name="funcao[]" class="form-control input-obrigatorio" placeholder="Ex.: Programador">
+                    <div class="invalid-feedback"> Preencha este campo </div>                
                 </div> <br>
 
                 <div class="form-group">
@@ -74,7 +80,8 @@ $(document).ready( () => {
                         <div class="input-group-prepend">
                             <span class="input-group-text">R$</span>
                         </div>
-                        <input type="number" id="salario${x}" name="salario${x}" class="form-control">
+                        <input type="text" id="salario${x}" name="salario[]" class="form-control input-obrigatorio money">
+                        <div class="invalid-feedback"> Informe o salário </div>  
                     </div>
                 </div> <br>
 
@@ -86,6 +93,9 @@ $(document).ready( () => {
         $('#funcionarios').on('click', `#removerFuncionario${x}`, e => {
             $(e.target).closest('div').remove()
         })
+
+        //implementar máscara no preço
+        $('.money').mask('#.##0,00', {reverse: true});
         
         x++
     })
@@ -122,7 +132,6 @@ function validaFormulario(){
     let dataInicio = $('#dataInicio').val()
     let dataFim = $('#dataFim').val()
     let valido = true
-    let mensagem = ''
 
     //campos not nullable
 
@@ -168,8 +177,8 @@ function validaFormulario(){
 
         //calculando a diferença
         let milissegundos_entre_datas = objDataFim.getTime() - objDataInicio.getTime()
+
         if(milissegundos_entre_datas < 0){
-            mensagem = 'A data final deve ser maior que a inicial'
             valido = false
             $('#dataFim').addClass('is-invalid')
         } else{
@@ -177,10 +186,20 @@ function validaFormulario(){
         }
     }
 
+    //verificando se os inputs de materiais e funcionarios estão preenchidos
+    $.each( $('.input-obrigatorio'), (i, input) => {
+        if( input.value.length == 0 ){
+            $(input).addClass('is-invalid')
+            valido = false
+        } else {
+            $(input).removeClass('is-invalid')
+        }
+    } )
+
     if(valido){
         $('#criarProjeto').submit()
     } else{
-        $('#btn-validar').before('<span class="text-danger">conserte os erros para prosseguir</span>')
+        $('#aviso').html('conserte os erros para prosseguir')
     }
 
 }
