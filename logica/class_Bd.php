@@ -55,4 +55,31 @@ class Bd {
         }
         $this->conexao->query($query3);
     }
+
+    public function selectProjeto_informacoes(){
+        #selecionar as informações gerais
+        $query1 = "SELECT * FROM informacoes_gerais where fk_id_usuario = :id_user";
+        $stmt = $this->conexao->prepare($query1);
+        $stmt->bindValue(':id_user', $_SESSION['id_user']);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function selectProjeto_materiais(){
+        #selecionar os materiais
+        $query2 = "SELECT * FROM materiais where fk_id_usuario = :id_user";
+        $stmt = $this->conexao->prepare($query2);
+        $stmt->bindValue(':id_user', $_SESSION['id_user']);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function selectProjeto_funcionarios(){
+        #selecionar os funcionários
+        $query3 = "SELECT * FROM funcionarios where fk_id_usuario = :id_user";
+        $stmt = $this->conexao->prepare($query3);
+        $stmt->bindValue(':id_user', $_SESSION['id_user']);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 }

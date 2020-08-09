@@ -80,9 +80,13 @@
     $conexao = new Conexao();
     $bd = new Bd($conexao, $projeto);
 
+    /*
     echo '<pre>';
     print_r($projeto);
     echo '<pre>';
+    */
 
     #inserir dados
     $bd->insertProjeto();
+
+    header('Location:../criar.php?criar=1');

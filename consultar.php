@@ -1,5 +1,7 @@
 <?php
     require_once 'logica/session_validate.php';
+
+    require_once "logica/dados_consultar.php";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -76,195 +78,106 @@
     <h1>Consulte seus projetos</h1>
     <hr>
 
-    <div id="projeto-1" class="border border-secondary p-3 mb-3 text-center">
-        <h2 class="titulo-projeto"> Manutenção do site da prefeitura </h2>
+    <? foreach ($lista_informacoes as $i => $li) {?>
+        <div id="projeto-1" class="border border-secondary p-3 mb-3 text-center">
+            <h2 class="titulo-projeto"> <?= $li->nome ?> </h2>
 
-        <div class="table-responsive d-none" id="tabela-1">
-            <table class="table table-striped table-hover">
+            <div class="table-responsive d-none" id="tabela-<?=$li->id_projeto?>">
+                <table class="table table-striped table-hover">
 
-                <!-- Detalhes gerais -->
-                <thead>
+                    <!-- Detalhes gerais -->
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="text-center table-primary h5">Detalhes gerais</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
                     <tr>
-                        <th colspan="2" class="text-center table-primary h5">Detalhes gerais</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                    <th> Custo total: </th>
-                    <td> R$ 5700.20 </td>
-                </tr>
-
-                <tr>
-                    <th> Colaboradores: </th>
-                    <td> 10 </td>
-                </tr>
-
-                <tr>
-                    <th> Data de início </th>
-                    <td> 31/08/2020 </td>
-                </tr>
-
-                <tr>
-                    <th> Prazo final </th>
-                    <td> 31/09/2020 </td>
-                </tr>
-
-                <tr>
-                    <th> Tempo de conclusão </th>
-                    <td> 30 dias </td>
-                </tr>
-
-                <tr>
-                    <th> Detalhes </th>
-                    <td> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet illo impedit inventore nemo nesciunt officiis sed. Aspernatur ducimus exercitationem fuga inventore necessitatibus odio odit perferendis reprehenderit veniam vitae. Tenetur! </td>
-                </tr>
-                </tbody>
-
-                <!-- Materiais -->
-                <thead>
-                    <tr>
-                        <th colspan="2" class="text-center table-secondary h5">Materiais</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <th> IDE Visual Studio </th>
-                        <td> R$ 200,00 </td>
+                        <th> Custo total: </th>
+                        <td> R$ <?= $li->custo_total ?> </td>
                     </tr>
 
-                    <tr>
-                        <th> Direitos de imagem </th>
-                        <td> R$ 300,00 </td>
-                    </tr>
+                    <? if($li->colaboradores != null) {?>
+                        <tr>
+                            <th> Colaboradores: </th>
+                            <td> <?= $li->colaboradores?> </td>
+                        </tr>
+                    <? } ?>
 
                     <tr>
-                        <th> Hospedagem de site </th>
-                        <td> R$ 500,00 </td>
-                    </tr>
-                </tbody>
-
-                <!-- Mão de obra -->
-                <thead>
-                    <tr>
-                        <th colspan="2" class="text-center table-warning h5">Mão de obra</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <th> Programador Full-Stack </th>
-                        <td> R$ 2000,00 </td>
+                        <th> Data de início </th>
+                        <td> <?= $li->data_inicio?> </td>
                     </tr>
 
+                    <? if( $li->data_fim != null ) {?>
+                        <tr>
+                            <th> Prazo final </th>
+                            <td> <?= $li->data_fim?> </td>
+                        </tr>
+
+                        <tr>
+                            <th> Tempo de conclusão </th>
+                            <td> <?= $li->tempo_previsto ?> dias </td>
+                        </tr>
+                    <? } ?>
+
                     <tr>
-                        <th> Designer </th>
-                        <td> R$ 1000,00 </td>
+                        <th> Detalhes </th>
+                        <td> <?= $li->detalhes ?> </td>
                     </tr>
-                </tbody>
-            </table>
+                    </tbody>
+
+                    <!-- Materiais -->
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="text-center table-secondary h5">Materiais</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <th> IDE Visual Studio </th>
+                            <td> R$ 200,00 </td>
+                        </tr>
+
+                        <tr>
+                            <th> Direitos de imagem </th>
+                            <td> R$ 300,00 </td>
+                        </tr>
+
+                        <tr>
+                            <th> Hospedagem de site </th>
+                            <td> R$ 500,00 </td>
+                        </tr>
+                    </tbody>
+
+                    <!-- Mão de obra -->
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="text-center table-warning h5">Mão de obra</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <th> Programador Full-Stack </th>
+                            <td> R$ 2000,00 </td>
+                        </tr>
+
+                        <tr>
+                            <th> Designer </th>
+                            <td> R$ 1000,00 </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button type="button" class="btn btn-success d-inline" id="exibir-projeto-<?= $li->id_projeto?>" onclick="exibeProjeto(<?= $li->id_projeto ?>)">Exibir projeto</button>
+            <button type="button" class="btn btn-danger d-none" id="esconder-projeto-<?= $li->id_projeto?>" onclick="escondeProjeto(<?= $li->id_projeto ?>)">Esconder projeto</button>
+
         </div>
-
-        <button type="button" class="btn btn-success d-inline" id="exibir-projeto-1" onclick="exibeProjeto(1)">Exibir projeto</button>
-        <button type="button" class="btn btn-danger d-none" id="esconder-projeto-1" onclick="escondeProjeto(1)">Esconder projeto</button>
-
-    </div>
-
-    <div id="projeto-2" class="border border-secondary p-3 mb-3 text-center">
-        <h2 class="titulo-projeto"> Manutenção do site da prefeitura </h2>
-
-        <div class="table-responsive d-none" id="tabela-2">
-            <table class="table table-striped table-hover">
-
-                <!-- Detalhes gerais -->
-                <thead>
-                <tr>
-                    <th colspan="2" class="text-center table-primary h5">Detalhes gerais</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                    <th> Custo total: </th>
-                    <td> R$ 5700.20 </td>
-                </tr>
-
-                <tr>
-                    <th> Colaboradores: </th>
-                    <td> 10 </td>
-                </tr>
-
-                <tr>
-                    <th> Data de início </th>
-                    <td> 31/08/2020 </td>
-                </tr>
-
-                <tr>
-                    <th> Prazo final </th>
-                    <td> 31/09/2020 </td>
-                </tr>
-
-                <tr>
-                    <th> Tempo de conclusão </th>
-                    <td> 30 dias </td>
-                </tr>
-
-                <tr>
-                    <th> Detalhes </th>
-                    <td> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet illo impedit inventore nemo nesciunt officiis sed. Aspernatur ducimus exercitationem fuga inventore necessitatibus odio odit perferendis reprehenderit veniam vitae. Tenetur! </td>
-                </tr>
-                </tbody>
-
-                <!-- Materiais -->
-                <thead>
-                <tr>
-                    <th colspan="2" class="text-center table-secondary h5">Materiais</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                    <th> IDE Visual Studio </th>
-                    <td> R$ 200,00 </td>
-                </tr>
-
-                <tr>
-                    <th> Direitos de imagem </th>
-                    <td> R$ 300,00 </td>
-                </tr>
-
-                <tr>
-                    <th> Hospedagem de site </th>
-                    <td> R$ 500,00 </td>
-                </tr>
-                </tbody>
-
-                <!-- Mão de obra -->
-                <thead>
-                <tr>
-                    <th colspan="2" class="text-center table-warning h5">Mão de obra</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                    <th> Programador Full-Stack </th>
-                    <td> R$ 2000,00 </td>
-                </tr>
-
-                <tr>
-                    <th> Designer </th>
-                    <td> R$ 1000,00 </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <button type="button" class="btn btn-success d-inline" id="exibir-projeto-2" onclick="exibeProjeto(2)">Exibir projeto</button>
-        <button type="button" class="btn btn-danger d-none" id="esconder-projeto-2" onclick="escondeProjeto(2)">Esconder projeto</button>
-
-    </div>
+    <? } ?>
 
 </section>
 

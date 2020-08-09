@@ -73,10 +73,18 @@
 
     <section class="container py-3 mb-3">
 
+        <!-- Mensagem de criação bem sucedida -->
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">
+                &times;
+            </button>
+            <strong>Sucesso!</strong> Seu projeto foi criado!
+        </div>
+
         <h1>Informe os dados do projeto</h1>
         <hr>
 
-        <form method="POST" action="logica/armazenarDados.php" id="criarProjeto">
+        <form method="POST" action="logica/dados_armazenar.php" id="criarProjeto">
             <fieldset>
                 <legend>Informações gerais</legend>
 
