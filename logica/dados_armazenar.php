@@ -89,4 +89,4 @@
     #inserir dados
     $bd->insertProjeto();
 
-    header('Location:../criar.php?criar=1');
+    header('Location:../criar.php?criar=sucesso');

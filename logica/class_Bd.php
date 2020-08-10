@@ -26,7 +26,7 @@ class Bd {
         $stmt->execute();
         print_r( $stmt->errorInfo() );
 
-        #selecionando o ID do projeto dinamicamente
+        #selecionando o ID do projeto criado acima
         $query_id = "SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'informacoes_gerais' AND table_schema = 'bd_project_maker' ";
         $stmt = $this->conexao->prepare($query_id);
         $stmt->execute();

@@ -74,12 +74,14 @@
     <section class="container py-3 mb-3">
 
         <!-- Mensagem de criação bem sucedida -->
-        <div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">
-                &times;
-            </button>
-            <strong>Sucesso!</strong> Seu projeto foi criado!
-        </div>
+        <? if( isset( $_GET['criar'] ) && $_GET['criar'] == 'sucesso' ) {?>
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">
+                    &times;
+                </button>
+                <strong>Sucesso!</strong> Seu projeto foi criado!
+            </div>
+        <? } ?>
 
         <h1>Informe os dados do projeto</h1>
         <hr>
@@ -90,8 +92,8 @@
 
                 <div class="form-group">
                     <label for="nome">Nome/identificação do projeto</label> <br>
-                    <input type="text" id="nome" name="nome" class="form-control" placeholder="Ex.: Desenvolvimento de sistema WEB">
-                    <div class="invalid-feedback"> preencha o campo de nome </div>
+                    <input type="text" id="nome" name="nome" class="form-control max-length" placeholder="Ex.: Desenvolvimento de sistema WEB" maxlength="50">
+                    <div class="invalid-feedback"> Preencha este campo  </div>
                 </div> <br>
 
                 <div class="form-group">

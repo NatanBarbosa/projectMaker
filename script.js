@@ -28,7 +28,7 @@ $(document).ready( () => {
 
                 <div class="form-group">
                     <label for="material${i}">Material/produto</label> <br>
-                    <input type="text" id="material${i}" name="material[]" class="form-control input-obrigatorio" placeholder="Ex.: IDE Jetbrains">
+                    <input type="text" id="material${i}" name="material[]" class="form-control max-length input-obrigatorio" placeholder="Ex.: IDE Jetbrains" maxlength="50">
                     <div class="invalid-feedback"> Preencha este campo </div>
                 </div> <br>
 
@@ -70,8 +70,8 @@ $(document).ready( () => {
 
                 <div class="form-group">
                     <label for="funcao${x}">Função</label> <br>
-                    <input type="text" id="funcao${x}" name="funcao[]" class="form-control input-obrigatorio" placeholder="Ex.: Programador">
-                    <div class="invalid-feedback"> Preencha este campo </div>                
+                    <input type="text" id="funcao${x}" name="funcao[]" class="form-control max-length input-obrigatorio" placeholder="Ex.: Programador" maxlength="50">
+                    <div class="invalid-feedback"> Preencha este campo  </div>            
                 </div> <br>
 
                 <div class="form-group">
@@ -134,9 +134,8 @@ function validaFormulario(){
     let valido = true
 
     //campos not nullable
-
     //verificando nome
-    if( nome.length == 0 ){
+    if( nome.length == 0){
         $('#nome').addClass('is-invalid')
         valido = false
     } else{
