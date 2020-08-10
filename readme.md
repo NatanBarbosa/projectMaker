@@ -34,3 +34,5 @@ Por fim a maior parte dos arquivos que fazem conexões com o banco de dados(PHP)
 A estrutura e o relacionamento das tabelas do banco de dados são estabelecidos assim:
 ![Relacionamento das tabelas do banco de dados](imagens/github/relacionamento_das_tabelas.png)
 
+Caso queira baixar o arquivo .sql do banco de dados para testar no seu próprio localhost [está disponível](bd_project_maker.sql)
+
