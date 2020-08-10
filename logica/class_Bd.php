@@ -65,20 +65,22 @@ class Bd {
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function selectProjeto_materiais(){
+    public function selectProjeto_materiais($fk_id_projeto){
         #selecionar os materiais
-        $query2 = "SELECT * FROM materiais where fk_id_usuario = :id_user";
+        $query2 = "SELECT * FROM materiais where fk_id_usuario = :id_user AND fk_id_projeto = :id_projeto";
         $stmt = $this->conexao->prepare($query2);
         $stmt->bindValue(':id_user', $_SESSION['id_user']);
+        $stmt->bindValue(':id_projeto', $fk_id_projeto);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function selectProjeto_funcionarios(){
+    public function selectProjeto_funcionarios($fk_id_projeto){
         #selecionar os funcionários
-        $query3 = "SELECT * FROM funcionarios where fk_id_usuario = :id_user";
+        $query3 = "SELECT * FROM funcionarios where fk_id_usuario = :id_user AND fk_id_projeto = :id_projeto";
         $stmt = $this->conexao->prepare($query3);
         $stmt->bindValue(':id_user', $_SESSION['id_user']);
+        $stmt->bindValue(':id_projeto', $fk_id_projeto);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }

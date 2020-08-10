@@ -78,7 +78,10 @@
     <h1>Consulte seus projetos</h1>
     <hr>
 
-    <? foreach ($lista_informacoes as $i => $li) {?>
+    <? foreach ($lista_informacoes as $i => $li) {
+        $lista_materiais = $bd->selectProjeto_materiais($li->id_projeto);
+        $lista_funcionarios = $bd->selectProjeto_funcionarios($li->id_projeto);    
+    ?>
         <div id="projeto-1" class="border border-secondary p-3 mb-3 text-center">
             <h2 class="titulo-projeto"> <?= $li->nome ?> </h2>
 
@@ -104,16 +107,19 @@
                             <td> <?= $li->colaboradores?> </td>
                         </tr>
                     <? } ?>
-
+                    
+                    <? $arrDataInicio = explode('-',$li->data_inicio); ?>
                     <tr>
                         <th> Data de início </th>
-                        <td> <?= $li->data_inicio?> </td>
+                        <td> <?= $arrDataInicio[2] . '/' . $arrDataInicio[1] . '/' . $arrDataInicio[0] ?> </td>
                     </tr>
 
-                    <? if( $li->data_fim != null ) {?>
+                    <? if( $li->data_fim != null ) {
+                        $arrDataFim = explode('-', $li->data_fim)    
+                    ?>
                         <tr>
                             <th> Prazo final </th>
-                            <td> <?= $li->data_fim?> </td>
+                            <td> <?= $arrDataFim[2] . '/' . $arrDataFim[1] . '/' . $arrDataFim[0] ?> </td>
                         </tr>
 
                         <tr>
@@ -127,49 +133,42 @@
                         <td> <?= $li->detalhes ?> </td>
                     </tr>
                     </tbody>
-
+                    
                     <!-- Materiais -->
-                    <thead>
-                        <tr>
-                            <th colspan="2" class="text-center table-secondary h5">Materiais</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <th> IDE Visual Studio </th>
-                            <td> R$ 200,00 </td>
-                        </tr>
-
-                        <tr>
-                            <th> Direitos de imagem </th>
-                            <td> R$ 300,00 </td>
-                        </tr>
-
-                        <tr>
-                            <th> Hospedagem de site </th>
-                            <td> R$ 500,00 </td>
-                        </tr>
-                    </tbody>
+                    <?if( count($lista_materiais) != 0 ) {  ?>
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="text-center table-secondary h5">Materiais</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <? foreach($lista_materiais as $lm) { ?>
+                                <tr>
+                                    <th> <?= $lm->nome_material ?> </th>
+                                    <td> R$ <?= $lm->preco ?> </td>
+                                </tr>
+                            <? } ?>
+                        </tbody>
+                    <? } ?>
 
                     <!-- Mão de obra -->
-                    <thead>
-                        <tr>
-                            <th colspan="2" class="text-center table-warning h5">Mão de obra</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <th> Programador Full-Stack </th>
-                            <td> R$ 2000,00 </td>
-                        </tr>
-
-                        <tr>
-                            <th> Designer </th>
-                            <td> R$ 1000,00 </td>
-                        </tr>
-                    </tbody>
+                    <?if( count($lista_funcionarios) != 0 ) {  ?>
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="text-center table-warning h5">Mão de obra</th>
+                            </tr>
+                        </thead>
+                        
+                        <? foreach($lista_funcionarios as $lf) {?>
+                            <tbody>
+                                <tr>
+                                    <th> <?= $lf->funcao ?> </th>
+                                    <td> R$ <?= $lf->salario ?> </td>
+                                </tr>
+                            </tbody>
+                        <? } ?>
+                    <? } ?>
                 </table>
             </div>
 
