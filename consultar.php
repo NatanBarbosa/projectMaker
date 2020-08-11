@@ -1,7 +1,8 @@
 <?php
     require_once 'logica/session_validate.php';
 
-    require_once "logica/dados_consultar.php";
+    require_once "logica/dados_consultar_excluir.php";
+    $lista_informacoes = $bd->selectProjeto_informacoes();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -74,6 +75,14 @@
 </header>
 
 <section class="container py-3 mb-3" id="pagina-consulta">
+    <? if( isset($_GET['excluir']) && $_GET['excluir'] === 'sucesso' ) {?>
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">
+                &times;
+            </button>
+            Seu projeto foi excluido
+        </div>
+    <?}?>
 
     <h1>Consulte seus projetos</h1>
     <hr>
@@ -172,11 +181,33 @@
                 </table>
             </div>
 
-            <button type="button" class="btn btn-success d-inline" id="exibir-projeto-<?= $li->id_projeto?>" onclick="exibeProjeto(<?= $li->id_projeto ?>)">Exibir projeto</button>
-            <button type="button" class="btn btn-danger d-none" id="esconder-projeto-<?= $li->id_projeto?>" onclick="escondeProjeto(<?= $li->id_projeto ?>)">Esconder projeto</button>
+            <button type="button" class="btn btn-success d-inline" id="exibir-projeto-<?= $li->id_projeto?>" onclick="exibeProjeto(<?= $li->id_projeto ?>)"> <i class="fas fa-eye"></i> <small>exibir</small> </button>
+            <button type="button" class="btn btn-secondary d-none" id="esconder-projeto-<?= $li->id_projeto?>" onclick="escondeProjeto(<?= $li->id_projeto ?>)"><i class="fas fa-eye-slash"></i> <small>ocultar</small> </button>
+            <button type="button" class="btn btn-danger d-none" id="excluir-projeto-<?= $li->id_projeto?>" onclick="excluiProjeto( <?= $li->id_projeto ?> , '<?=$li->nome?>' )"><i class="fas fa-trash"></i> <small>Excluir</small> </button>
 
         </div>
     <? } ?>
+
+    <!-- Modal -->
+    <div class="modal fade" id="confirma-excluir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="exampleModalLabel">Confirmação</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <class="text-danger">Você tem certeza que deseja excluir o projeto: <br> <strong class="text-danger" id="inserir-nome-projeto"></strong></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="excluir">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </section>
 

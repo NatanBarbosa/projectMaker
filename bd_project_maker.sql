@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10-Ago-2020 às 19:45
+-- Tempo de geração: 11-Ago-2020 às 18:37
 -- Versão do servidor: 10.4.11-MariaDB
 -- versão do PHP: 7.4.4
 
@@ -35,16 +35,6 @@ CREATE TABLE `funcionarios` (
   `fk_id_usuario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Extraindo dados da tabela `funcionarios`
---
-
-INSERT INTO `funcionarios` (`id_funcionario`, `funcao`, `salario`, `fk_id_projeto`, `fk_id_usuario`) VALUES
-(1, 'Programador back-end', 2500.85, 1, 1),
-(2, 'Programador front-end', 1600.00, 1, 1),
-(3, 'Churrasqueiro', 100.00, 2, 2),
-(4, 'Ator', 450.62, 4, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -63,16 +53,6 @@ CREATE TABLE `informacoes_gerais` (
   `fk_id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Extraindo dados da tabela `informacoes_gerais`
---
-
-INSERT INTO `informacoes_gerais` (`id_projeto`, `nome`, `custo_total`, `colaboradores`, `data_inicio`, `data_fim`, `tempo_previsto`, `detalhes`, `fk_id_usuario`) VALUES
-(1, 'Desenvolvimento de sistema Web', 5976.35, 3, '2020-08-09', '2020-09-15', 37, 'Desenvolvimento completo de uma página web, incluindo a interatividade com o usuário e a resposta dinâmica com o servidor.\r\nEsse projeto será para um cliente que deseja uma loja virtual para vender ursinhos de pelúcia.', 1),
-(2, 'Churrascão no seu zé', 420.00, 1, '2020-08-09', NULL, NULL, 'Churrascão na casa do seu zé rapaiz, kkkkk', 2),
-(3, 'Desenho do seu Alberto', 35.00, NULL, '2020-08-09', '2020-08-16', 7, 'Fazer um desenho realista do seu Alberto e a filha dele', 2),
-(4, 'Visita ao orfanato', 450.62, 1, '2020-08-09', NULL, NULL, 'Visita ao orfanato com um ator fantasiado de Batman pra entretenimento das crianças', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -86,21 +66,6 @@ CREATE TABLE `materiais` (
   `fk_id_projeto` int(11) DEFAULT NULL,
   `fk_id_usuario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Extraindo dados da tabela `materiais`
---
-
-INSERT INTO `materiais` (`id_material`, `nome_material`, `preco`, `fk_id_projeto`, `fk_id_usuario`) VALUES
-(1, 'IDE jetBrains', 500.00, 1, 1),
-(2, 'Domínio HostNet', 425.00, 1, 1),
-(3, 'Carnes', 250.00, 2, 2),
-(4, 'Aluguel da churrasqueira', 50.00, 2, 2),
-(5, 'Carvão', 20.00, 2, 2),
-(6, 'Lápis coloridos', 15.00, 3, 2),
-(7, 'Folha A4', 10.00, 3, 2),
-(8, 'Lápis de sombreamento', 5.00, 3, 2),
-(9, 'Fine pen de contorno', 5.00, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -163,19 +128,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `funcionarios`
 --
 ALTER TABLE `funcionarios`
-  MODIFY `id_funcionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_funcionario` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `informacoes_gerais`
 --
 ALTER TABLE `informacoes_gerais`
-  MODIFY `id_projeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_projeto` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `materiais`
 --
 ALTER TABLE `materiais`
-  MODIFY `id_material` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_material` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`

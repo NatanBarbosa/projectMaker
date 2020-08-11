@@ -84,4 +84,24 @@ class Bd {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
+    public function excluirProjeto($id_projeto){
+        #deletar materiais
+        $query2 = "DELETE FROM materiais WHERE fk_id_projeto = :id_projeto";
+        $stmt = $this->conexao->prepare($query2);
+        $stmt->bindValue(':id_projeto', $id_projeto);
+        $stmt->execute();
+
+        #deletar funcionarios
+        $query3 = "DELETE FROM funcionarios WHERE fk_id_projeto = :id_projeto";
+        $stmt = $this->conexao->prepare($query3);
+        $stmt->bindValue(':id_projeto', $id_projeto);
+        $stmt->execute();
+
+        #deletar informações gerais
+        $query1 = "DELETE FROM informacoes_gerais WHERE id_projeto = :id_projeto";
+        $stmt = $this->conexao->prepare($query1);
+        $stmt->bindValue(':id_projeto', $id_projeto);
+        $stmt->execute();
+    }
 }

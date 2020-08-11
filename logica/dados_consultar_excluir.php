@@ -8,4 +8,7 @@
     $projeto = new Projeto();
     $bd = new Bd($conexao, $projeto);
 
-    $lista_informacoes = $bd->selectProjeto_informacoes();
+    if( isset($_GET['id_projeto']) ){
+        $bd->excluirProjeto((int)$_GET['id_projeto']);
+        header('Location:../consultar.php?excluir=sucesso');
+    }

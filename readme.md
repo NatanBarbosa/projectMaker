@@ -1,9 +1,9 @@
 # Project Maker info
 
-### Intuito do site
+## Intuito do site
 Esse projeto foi criado com o intuito de minha aprendizagem sobre as tecnologias utilizadas no desenvolvimento web tanto na parte de **front end**, quanto **back end**. Não tenho nenhum intuito de ferir algum direito autoral de imagem.
 
-### tecnologias usadas
+## tecnologias usadas
 - HTML
 - CSS
 - JavaScript
@@ -14,7 +14,7 @@ Esse projeto foi criado com o intuito de minha aprendizagem sobre as tecnologias
     - Bootstrap
     - [fontAwesome](https://fontawesome.com/)
 
-### Sobre o site
+## Sobre o site
 O propósito do site é permitir o usuário organizar seus projetos de vida com informações completas de modo que depois ele possa voltar no site para consultar seus projetos criados de modo organizado, bonito e bem estruturado. As informações básicas de funcionamento e criação do projeto estão nessa página:
 ![informações do site](imagens/github/info.png)
 
@@ -36,3 +36,14 @@ A estrutura e o relacionamento das tabelas do banco de dados são estabelecidos 
 
 Caso queira baixar o arquivo .sql do banco de dados para testar no seu próprio localhost [está disponível](bd_project_maker.sql)
 
+## Nota
+As contas criadas para fazer login no index.php estão presentes no banco de dados na tabela "usuarios"
+
+### conta 1
+**E-mail:** user@teste.com
+**senha:** 1234
+
+### conta 2
+**E-mail:** jose@teste.com.br
+**senha:** 1234
+ 

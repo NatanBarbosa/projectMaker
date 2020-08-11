@@ -93,7 +93,7 @@
                 <div class="form-group">
                     <label for="nome">Nome/identificação do projeto</label> <br>
                     <input type="text" id="nome" name="nome" class="form-control max-length" placeholder="Ex.: Desenvolvimento de sistema WEB" maxlength="50">
-                    <div class="invalid-feedback"> Preencha este campo  </div>
+                    <div class="invalid-feedback"> Preencha este campo ou diminua a quantidade de caracteres (max: 50) </div>
                 </div> <br>
 
                 <div class="form-group">
