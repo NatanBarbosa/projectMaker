@@ -1,7 +1,7 @@
 <?php
     require_once 'logica/session_validate.php';
 
-    require_once "logica/dados_consultar_excluir.php";
+    require_once "logica/dados_criar_instancias.php";
     $lista_informacoes = $bd->selectProjeto_informacoes();
 ?>
 <!DOCTYPE html>
@@ -87,7 +87,19 @@
     <h1>Consulte seus projetos</h1>
     <hr>
 
-    <? foreach ($lista_informacoes as $i => $li) {
+    <? if( count($lista_informacoes) === 0) {?>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">OPS!</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Nenhum projeto encontrado</h6>
+                <p class="card-text">Você até o momento não criou nenhum projeto. Crie um projeto agora clicando no botão ou no link de criar projeto no menu acima </p>
+                <a href="criar.php" class="card-link btn btn-info">Criar agora</a>
+            </div>
+        </div>
+    <?}?>
+
+    <?
+        foreach ($lista_informacoes as $i => $li) {
         $lista_materiais = $bd->selectProjeto_materiais($li->id_projeto);
         $lista_funcionarios = $bd->selectProjeto_funcionarios($li->id_projeto);    
     ?>

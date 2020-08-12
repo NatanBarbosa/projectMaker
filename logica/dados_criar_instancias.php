@@ -12,3 +12,8 @@
         $bd->excluirProjeto((int)$_GET['id_projeto']);
         header('Location:../consultar.php?excluir=sucesso');
     }
+
+    if( isset($_GET['acao']) && $_GET['acao'] === 'cadastrar' ){
+        $bd->cadastrarUsuario( $_POST['novo_email'], $_POST['nova_senha'] );
+        header('Location:../index.php?login=criado');
+    }

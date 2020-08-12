@@ -224,6 +224,46 @@ function excluiProjeto(id_projeto, nome_projeto){
 
     //excluir
     $('#excluir').on('click', () => {
-        window.location.href=`logica/dados_consultar_excluir.php?id_projeto=${id_projeto}`
+        window.location.href=`logica/dados_criar_instancias.php`
     })
+}
+
+function confirmaCadastro() {
+    let email = $('#novo_email').val()
+    let senha = $('#nova_senha').val()
+    let confirma_senha = $('#confirma_senha').val()
+    let valido = true
+
+    //campos not null
+    if (email.length === 0 || senha.length === 0 || confirma_senha.length === 0){
+        valido = false
+        $('#novo_email').addClass('is-invalid')
+        $('#nova_senha').addClass('is-invalid')
+    } else {
+        $('#novo_email').removeClass('is-invalid')
+        $('#nova_senha').removeClass('is-invalid')
+    }
+
+    //email
+    if( email.indexOf("@") === -1 ){
+        valido = false
+        $('#novo_email').addClass('is-invalid')
+    } else {
+        $('#novo_email').removeClass('is-invalid')
+    }
+
+    //senha == confirma senha
+    if(senha !== confirma_senha){
+        valido = false
+        $('#confirma_senha').addClass('is-invalid')
+    } else {
+        $('#confirma_senha').removeClass('is-invalid')
+    }
+
+    if(valido){
+        $('#cadastro_form').submit()
+    } else {
+        $('#cadatro_erro').html('corrija os erros para continuar')
+    }
+
 }

@@ -9,6 +9,14 @@ class Bd {
         $this->projeto = $projeto;
     }
 
+    public function cadastrarUsuario($email, $senha){
+        $query = "INSERT INTO usuarios(email, senha) VALUES (:email, :senha)";
+        $stmt = $this->conexao->prepare($query);
+        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':senha', $senha);
+        $stmt->execute();
+    }
+
     public function insertProjeto(){
         #inserindo informações gerais
         $query1 = "INSERT INTO 

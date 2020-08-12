@@ -34,6 +34,15 @@
     <div id="pagina">
 
         <section id="login-container" class="container">
+            <?if(isset($_GET['login']) && $_GET['login'] == 'criado'){?>
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">
+                        &times;
+                    </button>
+                    <strong>Usuário cadastrado.</strong> Tente se logar com sua nova conta
+                </div>
+            <?}?>
+
             <div id="login-header" class="row">
                 <img src="imagens/logo_icon.png" alt="ícone de lâmpada" class="col-sm-3 img-fluid d-none d-sm-block">
                 <div class="col-sm-9 row d-flex">
@@ -45,6 +54,7 @@
             <hr>
 
             <div id="login-body">
+
                 <form action="logica/session_create.php" method="POST">
 
                     <label for="email">Email: </label>
@@ -74,8 +84,9 @@
                     <? } ?>
                     <hr>
 
-                    <button type="submit" class="btn btn-primary btn-block"> Login </button>
+                    <button type="submit" class="btn btn-primary btn-block mb-2"> Login </button>
                 </form>
+                <small class="text-secondary">Não tem uma conta? <a href="cadastrar.php">cadastre-se aqui</a>. </small>
 
             </div>
         </section>
