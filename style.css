@@ -153,3 +153,7 @@ Consultar projetos*/
     color: #4f5b69;
     font-size: 30px;
 }
+
+.border-bottom{
+    border-bottom: 1px solid black;
+}

@@ -28,7 +28,7 @@ $(document).ready( () => {
 
                 <div class="form-group">
                     <label for="material${i}">Material/produto</label> <br>
-                    <input type="text" id="material${i}" name="material[]" class="form-control max-length input-obrigatorio" placeholder="Ex.: IDE Jetbrains" maxlength="50">
+                    <input type="text" id="material${i}" name="nome_material[]" class="form-control max-length input-obrigatorio" placeholder="Ex.: IDE Jetbrains" maxlength="50">
                     <div class="invalid-feedback"> Preencha este campo ou diminua a quantidade de caracteres (max: 50) </div>
                 </div> <br>
 
@@ -38,7 +38,7 @@ $(document).ready( () => {
                         <div class="input-group-prepend">
                             <span class="input-group-text">R$</span>
                         </div>
-                        <input type="text" id="materialPreco${i}" name="materialPreco[]" class="form-control input-obrigatorio money">
+                        <input type="text" id="materialPreco${i}" name="preco[]" class="form-control input-obrigatorio money">
                         <div class="invalid-feedback"> Informe o preço </div>  
                     </div>
                 </div> <br>
@@ -115,6 +115,12 @@ function exibeProjeto(indice){
 
     //exibir botão de excluir projeto
     $(`#excluir-projeto-${indice}`).removeClass('d-none').addClass('d-inline')
+
+    //exibir botão de editar
+    $(`#editar-projeto-${indice}`).removeClass('d-none').addClass('d-inline')
+
+    //mostrar quebra de linha
+    $(`#separaBotoes-${indice}`).removeClass('d-none')
 }
 
 //esconder um projeto
@@ -130,13 +136,55 @@ function escondeProjeto(indice){
 
     //Escondendo botão de excluir projeto
     $(`#excluir-projeto-${indice}`).removeClass('d-inline').addClass('d-none')
+
+    //Escondendo botão de editar projeto
+    $(`#editar-projeto-${indice}`).removeClass('d-inline').addClass('d-none')
+
+    //mostrar quebra de linha
+    $(`#separaBotoes-${indice}`).addClass('d-none')
+}
+
+function validaData(update = false, _dataInicio, _dataFim) {
+    let dataInicio = null
+    let dataFim = null
+    if(!update){
+        dataInicio = $('#dataInicio').val()
+        dataFim = $('#dataFim').val()
+    } else {
+        dataInicio = _dataInicio
+        dataFim = _dataFim
+    }
+
+    //data final > data inicial
+    if(dataFim.length === 10){
+        //separando string em arrays -> [0] = ano | [1] = mes | [2] = dia
+        let arrDataInicio = dataInicio.split('-')
+        let arrDataFim = dataFim.split('-')
+
+        //consertando o mês dos arrays para o objeto de data
+        arrDataInicio[1] = Number(arrDataInicio[1]) - 1
+        arrDataFim[1] = Number(arrDataFim[1]) - 1
+
+        //criando objetos de data
+        let objDataInicio = new Date(arrDataInicio[0], arrDataInicio[1], arrDataInicio[2])
+        let objDataFim = new Date(arrDataFim[0], arrDataFim[1], arrDataFim[2])
+
+        //calculando a diferença
+        let milissegundos_entre_datas = objDataFim.getTime() - objDataInicio.getTime()
+
+        if(milissegundos_entre_datas < 0){
+            $('#dataFim').addClass('is-invalid')
+            return false
+        } else{
+            $('#dataFim').removeClass('is-invalid')
+        }
+    }
 }
 
 function validaFormulario(){
     let nome = $('#nome').val()
     let descricao = $('#descricao').val()
     let dataInicio = $('#dataInicio').val()
-    let dataFim = $('#dataFim').val()
     let valido = true
 
     //campos not nullable
@@ -164,31 +212,9 @@ function validaFormulario(){
         $('#dataInicio').removeClass('is-invalid')
     }
 
-    //data final > data inicial
-    if(dataFim.length === 10){
-        //separando string em arrays -> [0] = ano | [1] = mes | [2] = dia
-        let arrDataInicio = dataInicio.split('-')
-        let arrDataFim = dataFim.split('-')
-
-        //consertando o mês dos arrays para o objeto de data
-        arrDataInicio[1] = Number(arrDataInicio[1]) - 1
-        arrDataFim[1] = Number(arrDataFim[1]) - 1
-
-        console.log(arrDataInicio, arrDataFim)
-
-        //criando objetos de data
-        let objDataInicio = new Date(arrDataInicio[0], arrDataInicio[1], arrDataInicio[2])
-        let objDataFim = new Date(arrDataFim[0], arrDataFim[1], arrDataFim[2])
-
-        //calculando a diferença
-        let milissegundos_entre_datas = objDataFim.getTime() - objDataInicio.getTime()
-
-        if(milissegundos_entre_datas < 0){
-            valido = false
-            $('#dataFim').addClass('is-invalid')
-        } else{
-            $('#dataFim').removeClass('is-invalid')
-        }
+    //verificando data
+    if ( validaData() === false ){
+        valido = false
     }
 
     //verificando se os inputs de materiais e funcionarios estão preenchidos
@@ -224,7 +250,7 @@ function excluiProjeto(id_projeto, nome_projeto){
 
     //excluir
     $('#excluir').on('click', () => {
-        window.location.href=`logica/dados_criar_instancias.php`
+        window.location.href=`logica/dados_criar_instancias.php?id_projeto=${id_projeto}`
     })
 }
 
@@ -265,5 +291,115 @@ function confirmaCadastro() {
     } else {
         $('#cadatro_erro').html('corrija os erros para continuar')
     }
+
+}
+
+//editar projeto
+function editionStart(id_projeto){
+    //escondendo botões
+    $(`#editar-projeto-${id_projeto}`).removeClass('d-inline').addClass('d-none')
+    $(`#esconder-projeto-${id_projeto}`).removeClass('d-inline').addClass('d-none')
+    $(`#excluir-projeto-${id_projeto}`).removeClass('d-inline').addClass('d-none')
+
+    //exibindo botões
+    $(`#salvar-edicao-${id_projeto}`).removeClass('d-none')
+    $(`#cancelar-edicao-${id_projeto}`).removeClass('d-none')
+    $(`#edicao-aviso-${id_projeto}`).removeClass('d-none')
+
+    //colocando um hover e estilo
+    $(`.editavel-${id_projeto}`).hover(
+        e => $(e.target).css({'cursor': 'pointer', 'border': '1px solid lightgreen'}),
+        e => $(e.target).css({'border': 'none'})
+    )
+
+    $(`.nao-editavel-${id_projeto}`).hover(
+        e => $(e.target).css({'cursor': 'not-allowed', 'border': '1px solid lightcoral'}),
+        e => $(e.target).css({'border': 'none'})
+    )
+
+
+    $(`.editavel-${id_projeto}`).each( (i, campo) => {
+        campo.onclick = e => {
+
+            //inserindo um input no lugar dos valores
+            if( $(e.target).hasClass('input-text') ){
+                $(e.target).html(`<input type="text" required name="${$(e.target).attr('data-name')}" value="${$(e.target).attr('data-value')}" class="form-control" id="dataInicio">`)
+
+            } else if( $(e.target).hasClass('input-date-inicio') ){
+                $(e.target).html(`<input type="date" required name="${$(e.target).attr('data-name')}" value="${$(e.target).attr('data-value')}" class="form-control" id="dataInicio-${id_projeto}">`)
+
+            } else if( $(e.target).hasClass('input-date-fim') ){
+                $(e.target).html(`<input type="date" required name="${$(e.target).attr('data-name')}" value="${$(e.target).attr('data-value')}" class="form-control" id="dataFim-${id_projeto}">`)
+
+            } else if( $(e.target).hasClass('textarea') ){
+                $(e.target).html(`<textarea required name="${$(e.target).attr('data-name')}" class="form-control"> ${$(e.target).attr('data-value')} </textarea>`)
+
+            } else if( $(e.target).hasClass('input-money') ){
+                $(e.target).html(`<input type="text" required name="${$(e.target).attr('data-name')}" value="${$(e.target).attr('data-value')}" class="form-control new-money">`)
+                $('.new-money').mask('#.##0,00', {reverse: true});
+            }
+
+        }
+    } )
+}
+
+function verificar_enviar_mudancas(id_projeto){
+    //verificando a data
+    let valido = true
+    let dataInicio = ''
+    let dataFim = ''
+
+    if( document.getElementById(`dataInicio-${id_projeto}`) && document.getElementById(`dataFim-${id_projeto}`) ){
+        //pegando os valores das datas e enviando para função
+
+        //As duas datas preenchidas
+        dataInicio = document.getElementById(`dataInicio-${id_projeto}`).value
+        dataFim = document.getElementById(`dataFim-${id_projeto}`).value
+
+    } else if(document.getElementById(`dataInicio-${id_projeto}`) ){
+
+        //somente a data início preenchida
+        dataInicio = document.getElementById(`dataInicio-${id_projeto}`).value
+        dataFim = document.getElementById(`dataFim-proj-${id_projeto}`).getAttribute('data-value')
+
+    } else if( document.getElementById(`dataFim-${id_projeto}`) ){
+
+        // somente a data fim preenchida
+        dataInicio = document.getElementById(`dataInicio-proj-${id_projeto}`).getAttribute('data-value')
+        dataFim = document.getElementById(`dataFim-${id_projeto}`).value
+
+    } else {
+        // nenhum valor de data preenchido
+        dataInicio = document.getElementById(`dataInicio-proj-${id_projeto}`).getAttribute('data-value')
+        dataFim = document.getElementById(`dataFim-proj-${id_projeto}`).getAttribute('data-value')
+
+    }
+
+    //validar se os campos estão preenchidos
+    $('.form-control').each( (i, input) => {
+        //verificar se a data está preenchida
+        if( $(input).attr('type') === 'date' ){
+            if(input.value.length < 10){
+                valido = false
+            }
+        }
+
+        //verificar se os outros inputs estão preenchidos
+        if( $(input).attr('type') !== 'date' ){
+            if(input.value.length === 0){
+                valido = false
+            }
+        }
+
+    } )
+
+    if( validaData( true, dataInicio, dataFim ) === false ){
+        alert('a data final deve ser maior que a data inicial')
+    } else if(valido) {
+       $(`#form-editar-${id_projeto}`).submit()
+    } else {
+        alert('preencha todos os campos')
+    }
+
 
 }

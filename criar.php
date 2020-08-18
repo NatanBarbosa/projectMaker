@@ -83,6 +83,16 @@
             </div>
         <? } ?>
 
+        <!-- Mensagem de criação mal sucedida -->
+        <? if( isset( $_GET['criar'] ) && $_GET['criar'] == 'erro' ) {?>
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">
+                    &times;
+                </button>
+                <strong>OPS!😶</strong> <?= $_GET['mensagem']?>
+            </div>
+        <? } ?>
+
         <h1>Informe os dados do projeto</h1>
         <hr>
 
@@ -98,19 +108,19 @@
 
                 <div class="form-group">
                     <label for="dataInicio">Data de início</label> <br>
-                    <input type="date" id="dataInicio" name="dataInicio" class="form-control">
+                    <input type="date" id="dataInicio" name="data_inicio" class="form-control">
                     <div class="invalid-feedback"> preencha o campo de data </div>
                 </div> <br>
 
                 <div class="form-group">
-                    <label for="dataFim">Prazo final</label> <br>
-                    <input type="date" id="dataFim" name="dataFim" class="form-control">
+                    <label for="data_fim">Prazo final</label> <br>
+                    <input type="date" id="dataFim" name="data_fim" class="form-control">
                     <div class="invalid-feedback"> A data final não deve ser menor que a inicial </div>
                 </div> <br>
 
                 <div class="form-group">
                     <label for="descricao">Descrição/detalhes</label> <br>
-                    <textarea id="descricao" name="descricao" class="form-control" placeholder="insira uma descrição detalhada do projeto aqui"></textarea>
+                    <textarea id="descricao" name="detalhes" class="form-control" placeholder="insira uma descrição detalhada do projeto aqui"></textarea>
                     <div class="invalid-feedback"> Descreva seu projeto </div>
                 </div> <br>
             </fieldset>

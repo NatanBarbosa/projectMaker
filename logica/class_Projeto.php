@@ -5,8 +5,8 @@ class Projeto {
     private $id_usuario;
 
     #informações gerais
-    private $nome_projeto;
-    private $custoTotal;
+    private $nome;
+    private $custo_total;
     private $colaboradores;
     private $data_inicio;
     private $data_fim;

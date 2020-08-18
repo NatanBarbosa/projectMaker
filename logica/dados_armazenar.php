@@ -10,24 +10,24 @@
 
     $custo = 0;
     #verificando se o usuário adicionou materiais
-    if( isset($_POST['materialPreco']) ){
+    if( isset($_POST['preco']) ){
 
         #tratando os valores numéricos para o banco de dados
-        foreach ($_POST['materialPreco'] as $i => $mp){
-            $_POST['materialPreco'][$i] = str_replace('.', '', $mp);
+        foreach ($_POST['preco'] as $i => $mp){
+            $_POST['preco'][$i] = str_replace('.', '', $mp);
         }
-        foreach ($_POST['materialPreco'] as $i => $mp){
+        foreach ($_POST['preco'] as $i => $mp){
             $mp = str_replace(',', '.', $mp);
-            $_POST['materialPreco'][$i] = (float)$mp;
+            $_POST['preco'][$i] = (float)$mp;
         }
 
         #Calculando o custo total do projeto
-        foreach ($_POST['materialPreco'] as $mp){
+        foreach ($_POST['preco'] as $mp){
             $custo += $mp;
         }
 
         #preenchendo o objeto $projeto
-        $projeto->setMateriais($_POST['material'], $_POST['materialPreco']);
+        $projeto->setMateriais($_POST['nome_material'], $_POST['preco']);
     }
 
     #verificando se o usuário adicionou funcionarios
@@ -57,24 +57,24 @@
 
     #calculando o tempo previsto
     $diferenca_de_dias = null;
-    if($_POST['dataFim'] != null){
-        $segundosInicio = strtotime($_POST['dataInicio']);
-        $segundosFim = strtotime($_POST['dataFim']);
+    if($_POST['data_fim'] != null){
+        $segundosInicio = strtotime($_POST['data_inicio']);
+        $segundosFim = strtotime($_POST['data_fim']);
 
         $segundos_entre_datas = $segundosFim - $segundosInicio;
         $diferenca_de_dias = $segundos_entre_datas / (24*60*60);
 
         #preenchendo o objeto $projeto
-        $projeto->__set('data_fim', $_POST['dataFim']);
+        $projeto->__set('data_fim', $_POST['data_fim']);
         $projeto->__set('tempo_previsto', $diferenca_de_dias);
     }
 
     #preenchendo o objeto $projeto
     $projeto->__set('id_usuario', $_SESSION['id_user']);
-    $projeto->__set('nome_projeto', $_POST['nome']);
-    $projeto->__set('custoTotal', $custo);
-    $projeto->__set('data_inicio', $_POST['dataInicio']);
-    $projeto->__set('detalhes', $_POST['descricao']);
+    $projeto->__set('nome', $_POST['nome']);
+    $projeto->__set('custo_total', $custo);
+    $projeto->__set('data_inicio', $_POST['data_inicio']);
+    $projeto->__set('detalhes', $_POST['detalhes']);
 
     #instanciando os outros dois objetos
     $conexao = new Conexao();
@@ -87,6 +87,11 @@
     */
 
     #inserir dados
-    $bd->insertProjeto();
-
-    header('Location:../criar.php?criar=sucesso');
+    $retorno = $bd->insertProjeto();
+    if($retorno !== 'sucesso'){
+        header("Location:../criar.php?mensagem=$retorno&criar=erro");
+    } else {
+        header('Location:../criar.php?criar=sucesso');
+    }
+    
+    

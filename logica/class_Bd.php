@@ -21,10 +21,10 @@ class Bd {
         #inserindo informações gerais
         $query1 = "INSERT INTO 
                 informacoes_gerais(nome,custo_total,colaboradores,data_inicio,data_fim,tempo_previsto,detalhes,fk_id_usuario) 
-                VALUES(:nome_projeto, :custoTotal, :colaboradores, :data_inicio, :data_fim, :tempo_previsto, :detalhes, :id_usuario);";
+                VALUES(:nome, :custo_total, :colaboradores, :data_inicio, :data_fim, :tempo_previsto, :detalhes, :id_usuario);";
         $stmt = $this->conexao->prepare($query1);
-        $stmt->bindValue(':nome_projeto', $this->projeto->__get('nome_projeto'));
-        $stmt->bindValue(':custoTotal', $this->projeto->__get('custoTotal'));
+        $stmt->bindValue(':nome', $this->projeto->__get('nome'));
+        $stmt->bindValue(':custo_total', $this->projeto->__get('custo_total'));
         $stmt->bindValue(':colaboradores', $this->projeto->__get('colaboradores'));
         $stmt->bindValue(':data_inicio', $this->projeto->__get('data_inicio'));
         $stmt->bindValue(':data_fim', $this->projeto->__get('data_fim'));
@@ -32,7 +32,13 @@ class Bd {
         $stmt->bindValue(':detalhes', $this->projeto->__get('detalhes'));
         $stmt->bindValue(':id_usuario', $this->projeto->__get('id_usuario'));
         $stmt->execute();
-        print_r( $stmt->errorInfo() );
+
+        //caso de erro
+        $erro = $stmt->errorInfo();
+        if($erro[0] > 0){
+            $mensagem_erro = "Erro ao inserir os dados no banco de dados <br> <strong>Código do erro</strong>:" . $erro[1] .  "<br> <strong>Mensagem de erro:</strong> " . $erro[2];
+            return $mensagem_erro;
+        }
 
         #selecionando o ID do projeto criado acima
         $query_id = "SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'informacoes_gerais' AND table_schema = 'bd_project_maker' ";
@@ -62,6 +68,8 @@ class Bd {
             $query3 .= "INSERT INTO funcionarios(funcao, salario, fk_id_usuario, fk_id_projeto) VALUES('$funcao', $salario, $id_usuario, $id_projeto);";
         }
         $this->conexao->query($query3);
+
+        return 'sucesso';
     }
 
     public function selectProjeto_informacoes(){
@@ -111,5 +119,22 @@ class Bd {
         $stmt = $this->conexao->prepare($query1);
         $stmt->bindValue(':id_projeto', $id_projeto);
         $stmt->execute();
+    }
+
+    public function atualizarProjeto($tabela, $coluna, $valor, $coluna_where, $id){
+        $query = "UPDATE $tabela SET $coluna = :valor WHERE $coluna_where = :id";
+        $stmt = $this->conexao->prepare($query);
+        $stmt->bindValue(':valor', $valor);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        /*//caso de erro
+        $erro = $stmt->errorInfo();
+        if($erro[0] > 0){
+            $mensagem_erro = "Erro ao atualizar os dados no banco de dados <br> <strong>Código do erro</strong>:" . $erro[1] .  "<br> <strong>Mensagem de erro:</strong> " . $erro[2];
+            return $mensagem_erro;
+        }
+
+        return 'sucesso';*/
     }
 }
