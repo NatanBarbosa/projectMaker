@@ -104,44 +104,37 @@ $(document).ready( () => {
 
 //Exibir um projeto
 function exibeProjeto(indice){
-    //trocando a classe d-none da div da tabela
-    $(`#tabela-${indice}`).removeClass('d-none')
+    //escondendo um projeto caso esteja exibindo
+    $('.projeto').addClass('d-none')
+    $('.exibir').removeClass('d-none')
+    $('.esconder').addClass('d-none')
 
-    //Escondendo botão de exibir projeto
-    $(`#exibir-projeto-${indice}`).removeClass('d-inline').addClass('d-none')
+    //trocando a classe d-none da div do projeto
+    $(`#projeto-${indice}`).removeClass('d-none')
 
-    //exibindo botão de esconder projeto
-    $(`#esconder-projeto-${indice}`).removeClass('d-none').addClass('d-inline')
+    //trocando o botão de exibir pelo de ocultar no card
+    $(`#exibir-projeto-${indice}`).addClass('d-none')
+    $(`#esconder-projeto-${indice}`).removeClass('d-none')
 
-    //exibir botão de excluir projeto
-    $(`#excluir-projeto-${indice}`).removeClass('d-none').addClass('d-inline')
-
-    //exibir botão de editar
-    $(`#editar-projeto-${indice}`).removeClass('d-none').addClass('d-inline')
-
-    //mostrar quebra de linha
-    $(`#separaBotoes-${indice}`).removeClass('d-none')
+    //scrollando para baixo
+    $('html, body').animate({
+        scrollTop: $(`#projeto-${indice}`).offset().top
+    }, 'slow');
 }
 
 //esconder um projeto
 function escondeProjeto(indice){
-    //adicionando de volta a classe d-none para tabela
-    $(`#tabela-${indice}`).addClass('d-none')
+    //adicionando de volta a classe d-none para o projeto
+    $(`#projeto-${indice}`).addClass('d-none')
 
-    //Escondendo botão de esconder projeto
-    $(`#esconder-projeto-${indice}`).removeClass('d-inline').addClass('d-none')
+    //scrollando para cima
+    $('html, body').animate({
+        scrollTop: $('nav').offset().top
+    }, 'slow');
 
-    //exibindo botão de exibir projeto
-    $(`#exibir-projeto-${indice}`).removeClass('d-none').addClass('d-inline')
-
-    //Escondendo botão de excluir projeto
-    $(`#excluir-projeto-${indice}`).removeClass('d-inline').addClass('d-none')
-
-    //Escondendo botão de editar projeto
-    $(`#editar-projeto-${indice}`).removeClass('d-inline').addClass('d-none')
-
-    //mostrar quebra de linha
-    $(`#separaBotoes-${indice}`).addClass('d-none')
+    //trocando o botão de exibir pelo de ocultar no card
+    $(`#exibir-projeto-${indice}`).removeClass('d-none')
+    $(`#esconder-projeto-${indice}`).addClass('d-none')
 }
 
 function validaData(update = false, _dataInicio, _dataFim) {
