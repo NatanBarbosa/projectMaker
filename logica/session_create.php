@@ -14,11 +14,22 @@ $stmt->bindValue(':senha', $_POST['senha']);
 $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_OBJ);
 
+print_r($_POST);
+
 if( !empty($user) ){
-    //Login válido -> segue o fluxo
+    //Login válido -> criando session
     $_SESSION['id_user'] = $user->id_user;
     $_SESSION['email'] = $user->email;
     $_SESSION['senha'] = $user->senha;
+
+    if(isset($_POST['manter_conectado'])){
+        //criando cookie
+        setcookie('id_user', $user->id_user, time() + 24*60*60, '/');
+        setcookie('email', $user->email, time() + 24*60*60, '/');
+        setcookie('senha', $user->senha, time() + 24*60*60, '/' );
+    }
+
+    //redirecionando
     header('Location:../info.php');
 } else {
     //login invalido -> volta para tela de login

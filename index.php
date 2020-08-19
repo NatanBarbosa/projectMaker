@@ -1,3 +1,6 @@
+<?php
+    require "logica/cookie.php";
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -74,6 +77,9 @@
                         </div>
                         <input type="password" class="form-control" id="senha" name="senha" required placeholder="">
                     </div>
+
+                    <input type="checkbox" class="" name="manter_conectado" id="manter_conectado">
+                    <label for="manter_conectado">Manter-me conectado</label>
 
                     <? if( isset($_GET['login']) && $_GET['login'] == 'invalido' ) {?>
                         <small class="text-danger"> E-mail ou senha invalidos </small>
