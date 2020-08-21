@@ -1,10 +1,10 @@
 <?php
 
 class Conexao {
-    private $host = 'localhost';
-    private $dbname = 'bd_project_maker';
-    private $user = 'root';
-    private $pass = '';
+    private $host = 'sql306.epizy.com';
+    private $dbname = 'epiz_26542926_bd_project_maker';
+    private $user = 'epiz_26542926';
+    private $pass = 'Dm8xXtJfhjBtaG7';
 
     public function __get($attr){
         return $this->$attr;

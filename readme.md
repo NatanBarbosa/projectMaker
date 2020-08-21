@@ -3,6 +3,10 @@
 ## Intuito do site
 Esse projeto foi criado com o intuito de minha aprendizagem sobre as tecnologias utilizadas no desenvolvimento web tanto na parte de **front end**, quanto **back end**. Não tenho nenhum intuito de ferir algum direito autoral de imagem.
 
+### faça o teste
+- http://projectmaker.epizy.com
+- _Projeto hospedado em [infinity free](https://app.infinityfree.net)_
+
 ## tecnologias usadas
 - HTML
 - CSS

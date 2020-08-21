@@ -7,14 +7,12 @@ $conexao = new Conexao();
 $conexao = $conexao->conectar();
 
 #recuperando usuários do banco e verificando o login do front
-$query = 'SELECT * FROM USUARIOS WHERE email = :email AND senha = :senha';
+$query = "SELECT * FROM epiz_26542926_bd_project_maker.usuarios WHERE email = :email AND senha = :senha;";
 $stmt = $conexao->prepare($query);
-$stmt->bindValue(':email', $_POST['email']);
-$stmt->bindValue(':senha', $_POST['senha']);
+$stmt->bindParam(':email', $_POST['email']);
+$stmt->bindParam(':senha', $_POST['senha']);
 $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_OBJ);
-
-print_r($_POST);
 
 if( !empty($user) ){
     //Login válido -> criando session

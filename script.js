@@ -290,9 +290,9 @@ function confirmaCadastro() {
 //editar projeto
 function editionStart(id_projeto){
     //escondendo botões
-    $(`#editar-projeto-${id_projeto}`).removeClass('d-inline').addClass('d-none')
-    $(`#esconder-projeto-${id_projeto}`).removeClass('d-inline').addClass('d-none')
-    $(`#excluir-projeto-${id_projeto}`).removeClass('d-inline').addClass('d-none')
+    $(`#editar-projeto-${id_projeto}`).addClass('d-none')
+    $(`#esconder-projeto-${id_projeto}`).addClass('d-none')
+    $(`#excluir-projeto-${id_projeto}`).addClass('d-none')
 
     //exibindo botões
     $(`#salvar-edicao-${id_projeto}`).removeClass('d-none')
@@ -318,20 +318,10 @@ function editionStart(id_projeto){
             if( $(e.target).hasClass('input-text') ){
                 $(e.target).html(`<input type="text" required name="${$(e.target).attr('data-name')}" value="${$(e.target).attr('data-value')}" class="form-control" id="dataInicio">`)
 
-            } else if( $(e.target).hasClass('input-date-inicio') ){
-                $(e.target).html(`<input type="date" required name="${$(e.target).attr('data-name')}" value="${$(e.target).attr('data-value')}" class="form-control" id="dataInicio-${id_projeto}">`)
-
-            } else if( $(e.target).hasClass('input-date-fim') ){
-                $(e.target).html(`<input type="date" required name="${$(e.target).attr('data-name')}" value="${$(e.target).attr('data-value')}" class="form-control" id="dataFim-${id_projeto}">`)
-
             } else if( $(e.target).hasClass('textarea') ){
                 $(e.target).html(`<textarea required name="${$(e.target).attr('data-name')}" class="form-control"> ${$(e.target).attr('data-value')} </textarea>`)
 
-            } else if( $(e.target).hasClass('input-money') ){
-                $(e.target).html(`<input type="text" required name="${$(e.target).attr('data-name')}" value="${$(e.target).attr('data-value')}" class="form-control new-money">`)
-                $('.new-money').mask('#.##0,00', {reverse: true});
             }
-
         }
     } )
 }
@@ -341,33 +331,7 @@ function verificar_enviar_mudancas(id_projeto){
     let valido = true
     let dataInicio = ''
     let dataFim = ''
-
-    if( document.getElementById(`dataInicio-${id_projeto}`) && document.getElementById(`dataFim-${id_projeto}`) ){
-        //pegando os valores das datas e enviando para função
-
-        //As duas datas preenchidas
-        dataInicio = document.getElementById(`dataInicio-${id_projeto}`).value
-        dataFim = document.getElementById(`dataFim-${id_projeto}`).value
-
-    } else if(document.getElementById(`dataInicio-${id_projeto}`) ){
-
-        //somente a data início preenchida
-        dataInicio = document.getElementById(`dataInicio-${id_projeto}`).value
-        dataFim = document.getElementById(`dataFim-proj-${id_projeto}`).getAttribute('data-value')
-
-    } else if( document.getElementById(`dataFim-${id_projeto}`) ){
-
-        // somente a data fim preenchida
-        dataInicio = document.getElementById(`dataInicio-proj-${id_projeto}`).getAttribute('data-value')
-        dataFim = document.getElementById(`dataFim-${id_projeto}`).value
-
-    } else {
-        // nenhum valor de data preenchido
-        dataInicio = document.getElementById(`dataInicio-proj-${id_projeto}`).getAttribute('data-value')
-        dataFim = document.getElementById(`dataFim-proj-${id_projeto}`).getAttribute('data-value')
-
-    }
-
+    
     //validar se os campos estão preenchidos
     $('.form-control').each( (i, input) => {
         //verificar se a data está preenchida
@@ -393,6 +357,5 @@ function verificar_enviar_mudancas(id_projeto){
     } else {
         alert('preencha todos os campos')
     }
-
 
 }

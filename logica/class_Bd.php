@@ -41,7 +41,7 @@ class Bd {
         }
 
         #selecionando o ID do projeto criado acima
-        $query_id = "SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'informacoes_gerais' AND table_schema = 'bd_project_maker' ";
+        $query_id = "SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'informacoes_gerais' AND table_schema = 'epiz_26542926_bd_project_maker' ";
         $stmt = $this->conexao->prepare($query_id);
         $stmt->execute();
         $obj_id_projeto = $stmt->fetch(PDO::FETCH_OBJ);
